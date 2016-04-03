@@ -1,0 +1,42 @@
+---
+title: "IS607 - Week 10 - Web API's"
+author: "Rob Hodde"
+date: "April 2, 2016"
+output: html_document
+---
+
+The New York Times web site provides a rich set of APIs, as described here: http://developer.nytimes.com/docs
+You'll need to start by signing up for an API key.
+Your task is to choose one of the New York Times APIs, construct an interface in R to read in the JSON data, and
+transform it to an R dataframe.
+
+
+Send the request for top emailed sports stories:
+```{r}
+
+library(jsonlite)
+json <- fromJSON("http://api.nytimes.com/svc/mostpopular/v2/mostemailed/sports/30.json?api-key=sample-key")
+```
+
+Convert the list to a data frame:
+```{r}
+library (plyr)
+df <- ldply (json[4], data.frame)
+```
+
+Show the column names:
+```{r}
+length(df)  
+names(df) 
+```
+
+Show a few examples of how to access the data in a data frame:
+```{r}
+
+# title of each story
+df[,"title"]
+
+# example of full details of 10th article:
+df[10,]
+
+```
